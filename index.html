@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rabbit Talk</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+            color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            background-attachment: fixed;
+        }
+        header {
+            background-color: #333;
+            color: #f4f4f4;
+            padding: 10px 0;
+            text-align: center;
+            border-bottom: 2px solid #007BFF;
+            position: relative;
+        }
+        .menu {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+        }
+        .menu div {
+            width: 30px;
+            height: 3px;
+            background-color: #f4f4f4;
+            margin: 6px 0;
+            transition: 0.3s;
+        }
+        .menu:hover div {
+            background-color: #007BFF;
+        }
+        .menu-content {
+            display: none;
+            position: absolute;
+            top: 50px;
+            right: 10px;
+            background-color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .menu-content a {
+            display: block;
+            color: #f4f4f4;
+            text-decoration: none;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        .menu-content a:hover {
+            background-color: #007BFF;
+        }
+        .menu.open .menu-content {
+            display: block;
+        }
+        .main-content {
+            padding: 20px;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-links {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .tab-links button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .tab-links button.active {
+            background-color: #0056b3;
+        }
+        .registration, .topic, .petition, .messages, .owner-info, .stream, .recommendations {
+            background-color: #2e2e2e;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        .registration h2, .topic h2, .petition h3, .messages h2, .owner-info h3, .stream h2, .recommendations h2 {
+            margin-top: 0;
+        }
+        .registration input, .messages textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #3a3a3a;
+            color: #f4f4f4;
+        }
+        .registration button, .actions button, .petition button, .messages button, .stream button, .recommendations button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .registration button:hover, .actions button:hover, .petition button:hover, .messages button:hover, .stream button:hover, .recommendations button:hover {
+            background-color: #0056b3;
+        }
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #007BFF;
+            display: inline-block;
+            text-align: center;
+            line-height: 50px;
+            color: #fff;
+            font-weight: bold;
+        }
+        .stream, .recommendations {
+            border-left: 5px solid #007BFF;
+        }
+        .report {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #3a3a3a;
+            border-radius: 5px;
+        }
+        .region-language {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        .region-language select {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #555;
+            background-color: #3a3a3a;
+            color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="menu">
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+    <h1>Добро пожаловать на Rabbit Talk</h1>
+    <div class="menu-content">
+        <a href="#" id="posts-link">Посты</a>
+        <a href="#" id="streams-link">Стримы</a>
+        <a href="#" id="recommendations-link">Лента Рекомендаций</a>
+        <a href="#" id="report-link">Репорт</a>
+        <a href="#" id="region-link">Сменить Регион</a>
+        <a href="#" id="language-link">Язык</a>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="tab-links">
+        <button id="posts-tab" class="active">Посты</button>
+        <button id="streams-tab">Стримы</button>
+        <button id="recommendations-tab">Лента Рекомендаций</button>
+    </div>
+
+    <div id="posts" class="tab-content active">
+        <div class="registration">
+            <h2>Регистрация</h2>
+            <form>
+                <input type="email" placeholder="Введите ваш email" required>
+                <input type="password" placeholder="Введите ваш пароль" required>
+                <select required>
+                    <option value="" disabled selected>Выберите регион</option>
+                    <option value="ru">Россия</option>
+                    <option value="ua">Украина</option>
+                    <option value="us">США</option>
+                </select>
+                <select required>
+                    <option value="" disabled selected>Выберите язык</option>
+                    <option value="ru">Русский</option>
+                    <option value="en">Английский</option>
+                    <option value="uk">Украинский</option>
+                </select>
+                <button type="submit">Зарегистрироваться</button>
+            </form>
+        </div>
+
+        <div class="topic">
+            <h2>Пример Пост</h2>
+            <p>Это пример текста обсуждаемого поста. Пользователи могут оставлять свои комментарии и высказывать мнение.</p>
+            <div class="actions">
+                <button>👍 Лайк</button>
+                <button class="dislike-btn">👎 Дизлайк</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="streams" class="tab-content">
+        <div class="stream">
+            <h2>Стримы</h2>
+            <p>Это пример информации о стримах. Вы можете смотреть стримы.</p>
+        </div>
+    </div>
+
+    <div id="recommendations" class="tab-content">
+        <div class="recommendations">
+            <h2>Лента Рекомендаций</h2>
+            <p>Рекомендации на основе вашего региона.</p>
+        </div>
+    </div>
+
+    <div id="report" class="tab-content">
+        <div class="report">
+            <h3>Репорт</h3>
+            <p>Здесь можно отправить жалобу или репорт по поводу постов, комментариев и другого контента.</p>
+            <form>
+                <textarea rows="4" placeholder="Опишите проблему..."></textarea>
+                <button type="submit">Отправить Репорт</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="region" class="tab-content">
+        <div class="region-language">
+            <select>
+                <option>Выберите регион</option>
+                <option value="ru">Россия</option>
+                <option value="ua">Украина</option>
+                <option value="us">США</option>
+            </select>
+            <select>
+                <option>Выберите язык</option>
+                <option value="ru">Русский</option>
+                <option value="en">Английский</option>
+                <option value="uk">Украинский</option>
+            </select></div>
+    </div>
+</main>
+
+<script>
+    document.querySelectorAll('.tab-links button').forEach(button => {
+        button.addEventListener('click', () => {
+            document.querySelectorAll('.tab-links button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            button.classList.add('active');
+            const tabId = button.id.replace('-tab', '');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    document.querySelector('.menu').addEventListener('click', function() {
+        this.classList.toggle('open');
+    });
+</script>
+
+</body>
+</html>
